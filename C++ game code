@@ -1,0 +1,135 @@
+#include <iostream>
+#include <ctime>
+#include <stdlib.h>
+using namespace std;
+
+int const columns = 5;
+int const rows = 5;
+int cards[rows][columns];
+int x;
+int y;
+int a;
+int b;
+int c = 0;
+int numberofmatchestowingame = 7;
+char prompt;
+
+void clearcards()
+{
+	for(int i=0;i<columns;i++){
+		for(int j=0;j<rows;j++){
+			cards[i][j] = 0;
+		}
+	}
+}
+void setmatches()
+{
+	for(int i=0;i<columns;i++){
+		for(int j=0;j<rows;j++){
+		cards[i][j] = rand() % 5;
+		}
+	}
+}
+
+void displaycardshidden()
+{
+	char backofcards[5][5];
+	for(int i=0;i<5;i++){
+		for(int j=0;j<5;j++){
+			backofcards[i][j] = '$';
+			cout << backofcards[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+void showcards()
+{
+		for(int i=0;i<columns;i++){
+		for(int j=0;j<rows;j++){
+			cout << cards[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+void gameplay()
+{
+while(c< numberofmatchestowingame)
+	{
+	displaycardshidden();
+	cout << endl;	
+	cout << "Enter x y position: ";
+	cin >> x >> y;
+	cout << "You have selected a: " << cards[x][y] << endl;
+	cout << endl;
+
+	cout << "Enter x y position ";
+	cin >> a >> b;	
+	cout << "You have selected a: " << cards[a][b] << endl;
+	cout << endl;
+
+if(cards[x][y] == cards[a][b])
+	{
+	c++;
+	cout << "You have a match!" << endl;
+	cout << endl;
+	cards[x][y] = rand() % 5;//allows array position to generate new values so user can not enter the same match
+	cards[a][b] = rand() % 5;
+	}
+ else
+ 	{
+	cout << "This is not a match!" << endl;
+	cout << endl;
+	} 
+if( c == numberofmatchestowingame)
+	{
+	cout << "You made " << numberofmatchestowingame << " matches You Win!! " << endl;
+	break;
+	}
+else
+	{	
+cout << "Do you wish to continue? (y/n)): ";
+cin >> prompt;
+	if(prompt == 'n')
+	break;
+	}
+	cout << endl;		
+	
+	}
+}
+
+void gameprompt()
+{
+	cout << endl;
+	cout << "Welcome to Money Mansion!" << endl;
+	cout << endl; 
+	cout << "The objective of this game is to get 7 matches in order to win your money prize. " << endl;
+	cout << endl;
+	cout << "Attempt to make a match by selecting two $ cards. " << endl;
+	cout << endl;
+	cout << "To select a card enter a x y position ex.(4 2) " << endl;
+	cout << endl;
+	cout << "x is the row number from 0 to 4 and y is the column number from 0 to 4" << endl;
+	cout << endl;
+	cout << "Get 7 matches to win the game." << endl;
+	cout << endl;
+	cout << "Good Luck!!!!" << endl;
+}
+
+
+int main()
+{
+	cout << "Do you want to play Money Mansion? (y/n)): ";
+	cin >> prompt;
+		if(prompt == 'n')
+		return 0;
+	gameprompt();
+	cout << endl;		
+	srand(time(NULL));//allows random numbers stored in array to change position everytime program is ran
+	clearcards();
+	setmatches();
+	gameplay();
+	cout << endl;
+	cout << "Game Over! " << endl;
+	return 0;
+}
